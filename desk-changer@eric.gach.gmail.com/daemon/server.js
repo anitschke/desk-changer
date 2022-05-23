@@ -352,7 +352,10 @@ class Server extends Gio.Application {
     _set_wallpaper(uri) {
         deskchanger.debug(`setting wallpaper to ${uri}`);
         this._background.set_string('picture-uri', uri);
-        this._background.set_string('picture-uri-dark', uri);
+        // Older versions of gnome do not have 'picture-uri-dark' in the
+        // 'org.gnome.desktop.background' schema and will error out if set.
+        //
+        //this._background.set_string('picture-uri-dark', uri);
         this.emit_signal('Changed', new GLib.Variant('(s)', [uri]));
     }
 }
